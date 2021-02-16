@@ -4,10 +4,9 @@ import ClearIcon from '@material-ui/icons/Clear';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 function TodoItem({ completed, deleteTodo, title, id, handleCompleted }) {
-  
+ 
   return (
-    // <li className={completed ? 'completed' : 'todo__item'}>
-    <li className='todo__item'>
+    <li className={completed ? 'completed' : 'todo__item'}>
       <span onClick={() => handleCompleted(id)} className="checked">
         <RadioButtonUncheckedIcon/>
       </span>
