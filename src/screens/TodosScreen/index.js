@@ -1,97 +1,67 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './index.css';
 import TodoForm from '../../components/TodoForm';
 import TodoList from '../../components/TodoList';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
+import { useHistory } from 'react-router-dom';
 
-const filterState = {
-  ALL: 'ALL',
-  ACTIVE: 'ACTIVE',
-  COMPLETED: 'COMPLETED'
+
+//get the local storage
+const getLocalStorage = () => {
+  let list = localStorage.getItem('todos');
+  if (list) {
+    return JSON.parse(localStorage.getItem('todos'));
+  } else {
+    return [];
+  }
 }
 
+
 function TodosScreen() {
+  const history = useHistory();
+  const historyState = history.location.state
   //Set up our todos array
-  const [todos, setTodos] = useState([]);
-  console.log('TODOS', todos)
+  const [todos, setTodos] = useState(getLocalStorage());
+  // console.log('TODOS', todos)
   //Set up our input value
   const [text, setText] = useState('')
 
-  const [filter, setFilter] = useState(filterState.ALL);
-  
-
- // const [filteredTodos, setFilteredTodos] = useState([]);
-  //console.log('FilteredTOdos',filteredTodos)
-
-  //set input value to our todo hook
+  //set input value to our text hook
   const handleChange = (e) => {
     const inputText = e.target.value
     setText(inputText)
   }
 
-  // const handleScreenFilter = (filter) => {
-  //   //filter = all || active || completed
-    
-  //   // if(filter === 'all'){
-  //     //
-  //   }
-    
-  //   // if(filter === 'active'){
-  //     //
-  //   }
-
-  //   // if(filter === 'completed'){
-  //     //
-  //   }
-  // }
-
-  // const handleScreenFilter = (filter) => {
-  //   switch (filter) {
-  //     case 'ALL':
-  //       //handle all completed and active
-  //       console.log('ALL CLICKED')
-  //       setTodos(filteredTodos);
-  //       break;
-  //     case 'COMPLETED':
-  //       //handle completed
-  //       console.log('COMPLETED')
-  //       setFilteredTodos(todos.map((item) => {
-  //         if (item.completed === true) {
-  //           return {...item};
-  //         }
-          
-  //         return item;
-         
-  //       }))
-  //       setTodos(filteredTodos)
-
-  //       break;
-  //     case 'ACTIVE':
-  //       //handle active todos
-
-  //       console.log('ACTIVE')
-      
-
-  //       break;
-    
-  //     default:
-  //       //handle default state
-  //       break;
-  //   }
-  // }
-
   //add todos to our todos array
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(!text) return
     const newTodo = {
       id: new Date().getTime().toString(),
       text: text,
       completed: false,
-      // isActive: true
+      description: '',
+      createdAt: new Date().toDateString(),
+      updatedAt: new Date().toDateString(),
     }
     setTodos([newTodo, ...todos])
     setText('');
   }
+
+    useEffect(() => {
+      if(!historyState) return
+      handleUpdateTodoDescription()
+      history.replace('', null);
+    }, [historyState])
+
+     
+  const handleUpdateTodoDescription = () => {
+    const newTodos = todos.map((todo) => {
+      return todo.id === historyState?.todoId ? {...todo, description: historyState?.todoDescription} : {...todo}
+    })
+
+    setTodos(newTodos)
+ }
 
   //delete todos
   const deleteTodo = (id) => {
@@ -131,8 +101,10 @@ function TodosScreen() {
     setTodos(filtered);
   }
 
- 
-
+  //local storage
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [historyState])
 
   return (
     <div className="app">
@@ -155,10 +127,7 @@ function TodosScreen() {
           todos={todos}
           deleteTodo={deleteTodo}
           handleCompleted={handleCompleted}
-          //handleScreenFilter={handleScreenFilter}
           handleDeleteCompleted={handleDeleteCompleted}
-          filteredTodos={filteredTodos}
-          
         />  }
        
       </div>
