@@ -1,0 +1,25 @@
+.container{
+  background-image: var(--bcg-img);
+  background-repeat: no-repeat;
+  background-color: var(--bcg-clr);
+  height: 100vh;
+  width: 100vw;
+}
+
+.detailed__container{
+width: 40%;
+display: flex;
+flex-direction: column;
+margin: 20px auto;
+ padding: 30px;
+    
+}
+
+textarea{
+  border-radius: 10px;
+  border: thin;
+}
+
+label{
+  margin-right: 5px;
+}

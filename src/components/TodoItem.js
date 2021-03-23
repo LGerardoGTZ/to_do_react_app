@@ -17,32 +17,25 @@ const { id, text, completed, description, createdAt, updatedAt} = todo
    return console.log('asd')
  }
  
-  const handleClick = (text, id) => {
+  const handleClick = (id) => {
     history.push({
       pathname:`/DetailedTodo/${id}`, 
       state: {todo}
       })
   }
 
-  // useEffect(() => {
-  //   history.push('/DetailedTodo')
-   
-  // }, [selected])
 
-  // if (selected) {
-  //   return <DetailedTodo/>
-  // } else if (!selected) {
     return (
       <li  className={completed ? 'completed' : 'todo__item'}>
-        <span onClick={() => handleCompleted(id)} className="checked">
+        <span onClick={() => handleCompleted(id)} className="svg checked">
           {completed ? <CheckCircleOutlineIcon /> : <RadioButtonUncheckedIcon /> } 
         </span>
         <h5>{text}</h5>
         <div className="todo-icon">
-          <span onClick={() => handleClick(text, id)} className="edit-icon" >
+          <span onClick={() => handleClick(id)}  className="svg edit-icon" >
             <i><CreateIcon/></i>
           </span>
-          <span onClick={()=>deleteTodo(id)} className="delete-icon" >
+          <span onClick={()=>deleteTodo(id)} className="svg delete-icon" >
             <i><ClearIcon/></i>
           </span>
         </div>
@@ -50,7 +43,7 @@ const { id, text, completed, description, createdAt, updatedAt} = todo
     )
 
   }
-// }
+
 
 export default TodoItem
 

@@ -1,11 +1,11 @@
 .todo__list_container{
-  background-color: rgba(255, 255, 255, 255);
-  height: 400px;
+  background-color: var(--listInput-bcg-clr);
+  /* height: auto; */
   width: 538px;
 -webkit-box-shadow: 18px 18px 29px 6px rgba(0, 0, 0, 0.16);
 box-shadow: 18px 18px 29px 6px rgba(0, 0, 0, 0.16);
 border-radius: 5px;
-overflow: scroll;
+width: auto;
 margin-bottom: 30px;
 }
 
@@ -23,11 +23,16 @@ margin-bottom: 30px;
   margin: 10px 5px;
 }
 
+.todo__list_footer > span {
+  color: var(--text-clr);
+}
+
 .btn {
   border:none;
   background-color: transparent;
   cursor: pointer;
   text-align: center;
+  color: var(--text-clr);
 }
 .btn:hover{
   color: blue;
@@ -36,6 +41,6 @@ margin-bottom: 30px;
   color: darkblue;
 } */
 
-/* Check how items or messages were styles in previous projects
+/* Check how items or messages were styled in previous projects
 maybe whatsapp, snapchat
  */

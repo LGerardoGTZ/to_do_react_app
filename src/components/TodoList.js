@@ -26,10 +26,11 @@ function TodoList({ handleCompleted, todos, deleteTodo, handleDeleteCompleted })
           filteredTodos.map((item, index) => {
             return (
               <TodoItem
-                key={`${item.key}${index}`}
+                key={`${item.id}${index}`}
                 todo={item}
                 deleteTodo={deleteTodo}
                 handleDeleteCompleted={handleCompleted}
+                handleCompleted={handleCompleted}
               />
             )
           })

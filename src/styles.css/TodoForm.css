@@ -5,9 +5,10 @@
 .todo__form > input{
   width: 100%;
   border-radius: 5px;
-  height: 50px;
+  height: 4.3em;
   margin-bottom: 30px;
   border: none;
   outline-width: 0;
-  padding-left: 15px;
+  padding-left: 1em;
+  background-color: var(--listInput-bcg-clr);
 }

@@ -2,22 +2,25 @@ import React, { useState, useEffect } from 'react'
 import './index.css';
 import TodoForm from '../../components/TodoForm';
 import TodoList from '../../components/TodoList';
+import Alert from '../../components/Alert'
 import NightsStayIcon from '@material-ui/icons/NightsStay';
+import Brightness5Icon from '@material-ui/icons/Brightness5';
 import { useHistory } from 'react-router-dom';
 
 
-//get the local storage
-const getLocalStorage = () => {
-  let list = localStorage.getItem('todos');
-  if (list) {
-    return JSON.parse(localStorage.getItem('todos'));
-  } else {
-    return [];
-  }
-}
-
-
 function TodosScreen() {
+  //get the local storage
+  const getLocalStorage = () => {
+    let list = localStorage.getItem('todos');
+  
+    if (list) {
+      return JSON.parse(localStorage.getItem('todos'));
+    } else {
+      return [];
+    }
+  }
+
+
   const history = useHistory();
   const historyState = history.location.state
   //Set up our todos array
@@ -25,6 +28,30 @@ function TodosScreen() {
   // console.log('TODOS', todos)
   //Set up our input value
   const [text, setText] = useState('')
+  //alert
+  const [alert, setAlert] = useState({
+    show: false,
+    msg: '',
+    type: ''
+  });
+
+  //theme
+  const [theme, setTheme] = useState('light-theme')
+  
+  //toggle theme function
+  const toggleTheme = () => {
+    if (theme === 'light-theme') {
+      setTheme('dark-theme')
+    }
+    else {
+      setTheme('light-theme')
+    }
+  }
+
+  //attach the className to the html doc so we can access the variable depending on the selected theme
+  useEffect(() => {
+    document.documentElement.className = theme;
+  },[theme])
 
   //set input value to our text hook
   const handleChange = (e) => {
@@ -35,14 +62,14 @@ function TodosScreen() {
   //add todos to our todos array
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!text) return
+    if(!text || text.length > 50) return
     const newTodo = {
       id: new Date().getTime().toString(),
       text: text,
       completed: false,
       description: '',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString(),
+      createdAt: `${new Date().toDateString()} ${new Date().toLocaleTimeString()}`,
+      updatedAt: `${new Date().toDateString()} ${new Date().toLocaleTimeString()}`,
     }
     setTodos([newTodo, ...todos])
     setText('');
@@ -56,11 +83,16 @@ function TodosScreen() {
 
      
   const handleUpdateTodoDescription = () => {
-    const newTodos = todos.map((todo) => {
-      return todo.id === historyState?.todoId ? {...todo, description: historyState?.todoDescription} : {...todo}
+    const updatedTodos = todos.map((todo) => {
+      return todo.id === historyState?.todoId ? {
+        ...todo,
+        description: historyState?.todoDescription,
+        updatedAt: historyState?.updateDate,
+        text: historyState?.newTitle || todo.text
+      } : { ...todo }
     })
 
-    setTodos(newTodos)
+    setTodos(updatedTodos)
  }
 
   //delete todos
@@ -69,6 +101,7 @@ function TodosScreen() {
     if (!confirmationResult) return //if is NOT true, then do not run the following code
     const newTodos = todos.filter((item) => item.id !== id);
     setTodos(newTodos);
+    showAlert(true, 'danger','item deleted' )
   }
 
   const handleCompleted = (id) => {
@@ -80,6 +113,7 @@ function TodosScreen() {
 
       //set toggle completed
     const newTodos = todos.map((todo) => {
+      // if(!todo.completed)return
       return todo.id === id? {...todo, completed: !todo.completed} : {...todo}
     })
     setTodos(newTodos)
@@ -91,20 +125,19 @@ function TodosScreen() {
       return !todo.completed;
     });
     setTodos(completed)
+    showAlert(true, 'success', 'completed items deleted')
+
   }
 
-  //filter completed todos
-  const filteredTodos = () => {
-    const filtered = todos.filter((todo) => {
-      return todo.completed;
-    });
-    setTodos(filtered);
+  //create a function that we can use in many places every time we want to show the alert
+  const showAlert = (show = false, type = "", msg = "") => {
+    setAlert({ show, type, msg });
   }
 
   //local storage
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
-  }, [historyState])
+  }, [todos])
 
   return (
     <div className="app">
@@ -113,21 +146,23 @@ function TodosScreen() {
           <div className="title">
             <h1>TODO</h1>
           </div>
-          <div className="mode__container">
-            <NightsStayIcon />
-          </div>
+          <button onClick={toggleTheme} className="mode__container">
+            {theme === 'light-theme' ? < NightsStayIcon /> : <Brightness5Icon/> }
+          </button>
         </div>
         <TodoForm
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           item={text}
-        />
+          />
+        {alert.show && <Alert {...alert} removeAlert={showAlert} todos={ todos}/>}
         {/* conditional rendering */}
         {todos.length > 0 && <TodoList
           todos={todos}
           deleteTodo={deleteTodo}
           handleCompleted={handleCompleted}
           handleDeleteCompleted={handleDeleteCompleted}
+
         />  }
        
       </div>

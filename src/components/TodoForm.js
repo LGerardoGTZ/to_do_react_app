@@ -7,7 +7,7 @@ function TodoForm({item, handleChange, handleSubmit}) {
     <div >
       <form className="todo__form" onSubmit={handleSubmit} >
         <input type="text"
-          placeholder="Create a new todo"
+          placeholder="Create a new todo..."
           className="todo__input"
           value={item}
           onChange={ handleChange}/>

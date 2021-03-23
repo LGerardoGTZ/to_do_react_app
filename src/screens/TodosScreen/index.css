@@ -1,18 +1,36 @@
+
+.dark-theme {
+  --bcg-img: url('../../images/bg-desktop-dark.jpg');
+  --bcg-clr:rgba(24, 24, 36, 255);
+  --listInput-bcg-clr: #25273c;
+  --text-clr:rgba(125, 127, 150, 255);
+}
+
+.light-theme{
+  --bcg-img:url('../../images/bg-desktop-light.jpg');
+  --bcg-clr:rgba(250, 250, 250, 255);
+  --listInput-bcg-clr: #ffffff;
+  --text-clr:rgba(78, 76, 86, 255);
+}
+
 .app {
     height: 100vh;
     width: 100vw;
-    /* background-color: rgba(24, 24, 36, 255); */
-    background-color: rgba(250, 250, 250, 255);
-    /* background-image: url('./images/bg-desktop-dark.jpg'); */
-    background-image: url('../../images/bg-desktop-light.jpg');
+    background-color: var(--bcg-clr);
+    background-image: var(--bcg-img);
     background-repeat: no-repeat;
     display: grid;
     place-items: center;
   }
+
+
   
   .app__container{
     display: flex;
     flex-direction: column;
+    max-height: 70vh;
+    min-height: 500px;
+    width: 40%;
   }
   
   .title{
@@ -33,4 +51,5 @@
   .mode__container > svg{
      color: white;
      font-size: xx-large;
+     background: transparent;
   }
