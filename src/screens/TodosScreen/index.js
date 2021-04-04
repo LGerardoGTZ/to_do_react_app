@@ -159,6 +159,7 @@ function TodosScreen() {
         {alert.show && <Alert {...alert} removeAlert={showAlert} todos={ todos}/>}
         {/* conditional rendering */}
         {todos.length > 0 && <TodoList
+          text={text}
           todos={todos}
           deleteTodo={deleteTodo}
           handleCompleted={handleCompleted}

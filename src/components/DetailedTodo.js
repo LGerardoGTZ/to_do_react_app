@@ -36,24 +36,23 @@ function DetailedTodo() {
   return (
     <div className="container">
       <div className="detailed__container">
-      <form action="">
+      <form>
       <label>Title</label>
-        <input type="text" value={newTitle}  placeholder={text} onChange={handleNewTitle}/>
+        <input className="detailed__input" type="text" value={newTitle}  placeholder={text} onChange={handleNewTitle}/>
       </form>
       <div className="detailed__date">
-          <small><p>Todo was created on {createdAt}</p></small>
-          <small><p>Todo was updated on {updatedAt}</p></small>
+          <small><p>Created on {createdAt}</p></small>
+          <small><p>Updated on {updatedAt}</p></small>
         </div>
         <Link to='/'>
-          <button className="btn alert-danger">Go back</button>
+          <button className="alert-danger">Go back</button>
         </Link>
       <main className="todo__description">
-          <textarea placeholder="write here your description..." value={todoDescription} onChange={handleChangeDescription} rows={10} cols={60} />
+          <textarea placeholder="write here your description..." value={todoDescription} onChange={handleChangeDescription} rows={15} cols={60} />
 
       </main>
-      <div className="btn">
-        <button onClick={() => handleUpdateDescription()}>Save</button>
-      
+      <div className="btn__container">
+        <button className="save_btn" onClick={() => handleUpdateDescription()}>Save</button>
       </div>
       </div>
     </div>

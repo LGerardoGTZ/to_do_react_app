@@ -9,10 +9,12 @@ const FILTER_STATES = {
 }
 
 //change item.item to item.text
-function TodoList({ handleCompleted, todos, deleteTodo, handleDeleteCompleted }) {
+function TodoList({ text, handleCompleted, todos, deleteTodo, handleDeleteCompleted }) {
   const [filter, setFilter] = useState(FILTER_STATES.ALL)
 
   const filteredTodos = todos.filter(todo => {
+    console.log('TODO....', todo)
+    if(todo.text.toLowerCase().includes(text.toLowerCase()))return todo
     if (filter === FILTER_STATES.ALL) return todo
     // if (filter === FILTER_STATES.ACTIVE) return todo.completed
     if (filter === FILTER_STATES.ACTIVE) return !todo.completed
