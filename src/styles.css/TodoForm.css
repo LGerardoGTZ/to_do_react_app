@@ -11,4 +11,5 @@
   outline-width: 0;
   padding-left: 1em;
   background-color: var(--listInput-bcg-clr);
+  color: var(--text-clr);
 }

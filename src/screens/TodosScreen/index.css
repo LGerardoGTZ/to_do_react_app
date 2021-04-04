@@ -18,6 +18,7 @@
     width: 100vw;
     background-color: var(--bcg-clr);
     background-image: var(--bcg-img);
+    background-size:  100vw;
     background-repeat: no-repeat;
     display: grid;
     place-items: center;

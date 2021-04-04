@@ -81,7 +81,8 @@ function TodosScreen() {
       history.replace('', null);
     }, [historyState])
 
-     
+  
+    //this functions is on charge of update the todos that have been added a description
   const handleUpdateTodoDescription = () => {
     const updatedTodos = todos.map((todo) => {
       return todo.id === historyState?.todoId ? {
