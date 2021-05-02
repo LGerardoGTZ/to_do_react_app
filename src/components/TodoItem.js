@@ -13,10 +13,6 @@ const { id, text, completed, description, createdAt, updatedAt} = todo
   //execute useHistory
   const history = useHistory();
  
- const test = () => {
-   return console.log('asd')
- }
- 
   const handleClick = (id) => {
     history.push({
       pathname:`/DetailedTodo/${id}`, 
