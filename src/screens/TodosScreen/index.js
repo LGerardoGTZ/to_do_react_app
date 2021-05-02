@@ -6,6 +6,7 @@ import Alert from '../../components/Alert'
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 import Brightness5Icon from '@material-ui/icons/Brightness5';
 import { useHistory } from 'react-router-dom';
+import paginate from '../../utils/paginate'
 
 
 function TodosScreen() {
@@ -37,6 +38,9 @@ function TodosScreen() {
 
   //theme
   const [theme, setTheme] = useState('light-theme')
+
+  //page for pagination
+  const [page, setPage] = useState(0);
   
   //toggle theme function
   const toggleTheme = () => {
@@ -47,6 +51,12 @@ function TodosScreen() {
       setTheme('light-theme')
     }
   }
+
+  //testing with useEffect for pagination
+  useEffect(() => {
+    paginate([todos][page])
+      
+  },[])
 
   //attach the className to the html doc so we can access the variable depending on the selected theme
   useEffect(() => {
@@ -72,6 +82,7 @@ function TodosScreen() {
       updatedAt: `${new Date().toDateString()} ${new Date().toLocaleTimeString()}`,
     }
     setTodos([newTodo, ...todos])
+    setTodos([newTodo, ...todos])
     setText('');
   }
 
@@ -81,7 +92,8 @@ function TodosScreen() {
       history.replace('', null);
     }, [historyState])
 
-     
+  
+    //this functions is on charge of update the todos that have been added a description
   const handleUpdateTodoDescription = () => {
     const updatedTodos = todos.map((todo) => {
       return todo.id === historyState?.todoId ? {
@@ -158,6 +170,7 @@ function TodosScreen() {
         {alert.show && <Alert {...alert} removeAlert={showAlert} todos={ todos}/>}
         {/* conditional rendering */}
         {todos.length > 0 && <TodoList
+          text={text}
           todos={todos}
           deleteTodo={deleteTodo}
           handleCompleted={handleCompleted}

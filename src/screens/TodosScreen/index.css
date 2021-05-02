@@ -18,6 +18,7 @@
     width: 100vw;
     background-color: var(--bcg-clr);
     background-image: var(--bcg-img);
+    background-size:  100vw;
     background-repeat: no-repeat;
     display: grid;
     place-items: center;
@@ -30,7 +31,7 @@
     flex-direction: column;
     max-height: 70vh;
     min-height: 500px;
-    width: 40%;
+    width: 50%;
   }
   
   .title{
@@ -38,7 +39,7 @@
   }
   
   .title > h1 {
-    letter-spacing: .5em;
+    letter-spacing: .3em;
     color: rgba(255, 253, 254, 255);
   }
   
@@ -52,4 +53,28 @@
      color: white;
      font-size: xx-large;
      background: transparent;
+  }
+
+  @media screen and (min-width:900px){
+    .app__container{
+      width:35rem
+    }
+  }
+
+  @media screen and (max-width:600px){
+    .app__container{
+      width: 80%;
+    }
+  }
+
+  @media screen and (max-width:500px){
+    .mode__container > svg{
+      font-size: 1.3rem;
+    }
+  }
+
+  @media screen and (max-width:815px){
+      .title>h1 {
+        color:#9c9c9c;
+      }
   }
